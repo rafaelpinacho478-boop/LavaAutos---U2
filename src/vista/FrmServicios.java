@@ -1,0 +1,698 @@
+package vista;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+
+import controlador.ClienteController;
+import controlador.OrdenController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import controlador.ServicioController;
+import controlador.VehiculoController;
+import java.awt.event.ActionEvent;
+import modelo.Cliente;
+import modelo.Servicio;
+import modelo.Vehiculo;
+import utilidades.Validaciones;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import modelo.Orden;
+
+/**
+ *
+ * @author kevinjimenez
+ */
+  
+
+    public class FrmServicios extends javax.swing.JFrame {
+
+        private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmServicios.class.getName());
+        private ServicioController controlador;
+        private OrdenController ordenController;
+        private ClienteController clienteController;
+        private VehiculoController vehiculoController;
+        private ArrayList<Orden> listaOrdenes = new ArrayList<>();
+        private int idServicioSeleccionado = -1;
+
+        /**
+         * Creates new form FrmServicios
+         */
+        public FrmServicios() {
+            initComponents();
+            this.setSize(800, 600);
+            this.setLocationRelativeTo(null);
+            panelTituloServicios.setTitulo("Gestión de Servicios");
+
+            controlador = new ServicioController();
+            ordenController = new OrdenController();
+            clienteController = new ClienteController();
+            vehiculoController = new VehiculoController();
+
+            cargarClientes();
+            cargarServicios();
+            cargarVehiculos();
+            
+            cargarTabla();
+        }
+
+        private void cargarTabla() {
+
+    DefaultTableModel modelo =
+            (DefaultTableModel) tblServicios.getModel();
+
+    modelo.setRowCount(0);
+
+    listaOrdenes = ordenController.listarOrdenes();
+
+    for (Orden orden : listaOrdenes) {
+
+    modelo.addRow(new Object[]{
+
+        orden.getIdOrden(),
+        orden.getNombreCliente(),
+        orden.getNombreVehiculo(),
+        orden.getNombreServicio(),
+        orden.getFechaIngreso(),
+        orden.getHoraIngreso(),
+        orden.getCostoFinal()
+
+    });
+
+}
+
+}
+
+        private void cargarDatosServicio() {
+
+    if (cmbServicio.getSelectedItem() == null) {
+        return;
+    }
+
+    Servicio servicio = controlador.buscarServicioPorNombre(
+            cmbServicio.getSelectedItem().toString());
+
+    if (servicio != null) {
+
+        txtDescripcion.setText(servicio.getDescripcion());
+        txtPrecio.setText(String.valueOf(servicio.getPrecio()));
+        txtDuracion.setText(String.valueOf(servicio.getDuracion()));
+
+    }
+}
+        
+        private void cargarServicios() {
+
+    cmbServicio.removeAllItems();
+
+    ArrayList<Servicio> lista = controlador.listarServicios();
+
+    for (Servicio servicio : lista) {
+
+        cmbServicio.addItem(servicio);
+
+    }
+
+}
+        
+        private void cargarClientes() {
+
+    cmbCliente.removeAllItems();
+
+    ArrayList<Cliente> lista = clienteController.listarClientes();
+
+    for (Cliente cliente : lista) {
+
+        cmbCliente.addItem(cliente);
+
+    }
+
+}
+        
+        private void cargarVehiculos() {
+
+    cmbVehiculo.removeAllItems();
+
+    Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+
+    if (cliente == null) {
+        return;
+    }
+
+    ArrayList<Vehiculo> lista =
+            vehiculoController.listarVehiculosPorCliente(
+                    cliente.getIdCliente());
+
+    for (Vehiculo vehiculo : lista) {
+
+        cmbVehiculo.addItem(vehiculo);
+
+    }
+
+}
+        
+        private void seleccionarCliente(int idCliente) {
+
+    for (int i = 0; i < cmbCliente.getItemCount(); i++) {
+
+        Cliente cliente = (Cliente) cmbCliente.getItemAt(i);
+
+        if (cliente.getIdCliente() == idCliente) {
+
+            cmbCliente.setSelectedIndex(i);
+            return;
+
+        }
+
+    }
+
+}
+        
+        private void seleccionarVehiculo(int idVehiculo) {
+
+    for (int i = 0; i < cmbVehiculo.getItemCount(); i++) {
+
+        Vehiculo vehiculo = (Vehiculo) cmbVehiculo.getItemAt(i);
+
+        if (vehiculo.getIdVehiculo() == idVehiculo) {
+
+            cmbVehiculo.setSelectedIndex(i);
+            return;
+
+        }
+
+    }
+
+}
+        
+        private void seleccionarServicio(int idServicio) {
+
+    for (int i = 0; i < cmbServicio.getItemCount(); i++) {
+
+        Servicio servicio = (Servicio) cmbServicio.getItemAt(i);
+
+        if (servicio.getIdServicio() == idServicio) {
+
+            cmbServicio.setSelectedIndex(i);
+            return;
+
+        }
+
+    }
+
+}
+        /**
+         * This method is called from within the constructor to initialize the
+         * form. WARNING: Do NOT modify this code. The content of this method is
+         * always regenerated by the Form Editor.
+         */
+        @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel3 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                java.net.URL url = getClass().getResource("/Imagenes/1.jpeg");
+                if (url != null) {
+                    java.awt.Image img = new javax.swing.ImageIcon(url).getImage();
+                    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtObservaciones = new componentes.CampoTextoPersonalizado();
+        lblTipoServicio = new javax.swing.JLabel();
+        lblDuracion = new javax.swing.JLabel();
+        lblObservaciones = new javax.swing.JLabel();
+        lblVehiculo = new javax.swing.JLabel();
+        btnGuardar = new componentes.BotonPersonalizado();
+        lblCliente = new javax.swing.JLabel();
+        cmbCliente = new javax.swing.JComboBox<>();
+        btnNuevo = new componentes.BotonPersonalizado();
+        txtDuracion = new componentes.CampoTextoPersonalizado();
+        txtDescripcion = new componentes.CampoTextoPersonalizado();
+        cmbServicio = new javax.swing.JComboBox<>();
+        btnRegresar = new componentes.BotonPersonalizado();
+        lblPrecio = new javax.swing.JLabel();
+        btnModificar = new componentes.BotonPersonalizado();
+        lblDescripcion = new javax.swing.JLabel();
+        txtPrecio = new componentes.CampoTextoPersonalizado();
+        cmbVehiculo = new javax.swing.JComboBox<>();
+        panelTituloServicios = new componentes.PanelTitulo();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblServicios = new componentes.TablaPersonalizada();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Servicios Dados");
+
+        jPanel1.setOpaque(false);
+
+        jScrollPane3.setViewportView(txtObservaciones);
+
+        lblTipoServicio.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblTipoServicio.setText("Servicio:");
+
+        lblDuracion.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblDuracion.setText("Duración (min):");
+
+        lblObservaciones.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblObservaciones.setText("Observaciones:");
+
+        lblVehiculo.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblVehiculo.setText("Vehículo:");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+
+        lblCliente.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblCliente.setText("Cliente:");
+
+        cmbCliente.addActionListener(this::cmbClienteActionPerformed);
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(this::btnNuevoActionPerformed);
+
+        txtDuracion.setEditable(false);
+
+        txtDescripcion.setEditable(false);
+
+        cmbServicio.addActionListener(this::cmbServicioActionPerformed);
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(this::btnRegresarActionPerformed);
+
+        lblPrecio.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblPrecio.setText("Precio:");
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
+
+        lblDescripcion.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblDescripcion.setText("Descripción:");
+
+        txtPrecio.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblObservaciones)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblDuracion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDuracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblPrecio)
+                                .addGap(46, 46, 46)
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblDescripcion)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblVehiculo)
+                        .addGap(109, 109, 109))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTipoServicio)
+                            .addComponent(lblCliente))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(196, 196, 196)
+                                .addComponent(cmbVehiculo, 0, 85, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panelTituloServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelTituloServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblCliente)
+                                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblVehiculo)
+                                    .addComponent(cmbVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addComponent(lblTipoServicio)
+                                .addGap(15, 15, 15))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblDescripcion)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPrecio)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDuracion)
+                    .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblObservaciones)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        jPanel2.setOpaque(false);
+
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID Orden", "Cliente", "Vehículo", "Servicio", "Fecha", "Hora Ingreso", "Costo"
+            }
+        ));
+        tblServicios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblServiciosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblServicios);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbServicioActionPerformed
+        Servicio servicio =
+            (Servicio) cmbServicio.getSelectedItem();
+
+    if (servicio == null) {
+        return;
+    }
+
+    txtPrecio.setText(String.valueOf(servicio.getPrecio()));
+    txtDuracion.setText(String.valueOf(servicio.getDuracion()));
+    txtDescripcion.setText(servicio.getDescripcion());
+    }//GEN-LAST:event_cmbServicioActionPerformed
+
+    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
+        cargarVehiculos();
+    }//GEN-LAST:event_cmbClienteActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        txtDescripcion.setText("");
+        txtObservaciones.setText("");
+        txtPrecio.setText("");
+        txtDuracion.setText("");
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+    Vehiculo vehiculo = (Vehiculo) cmbVehiculo.getSelectedItem();
+    Servicio servicio = (Servicio) cmbServicio.getSelectedItem();
+
+    if (cliente == null || vehiculo == null || servicio == null) {
+
+        JOptionPane.showMessageDialog(this,
+                "Debe seleccionar un cliente, un vehículo y un servicio.");
+
+        return;
+
+    }
+
+    Orden orden = new Orden();
+
+    orden.setFechaIngreso(LocalDate.now().toString());
+
+    orden.setHoraIngreso(
+            LocalTime.now()
+                    .withSecond(0)
+                    .withNano(0)
+                    .toString());
+
+    orden.setHoraSalida(null);
+
+    orden.setCostoFinal(servicio.getPrecio());
+
+    orden.setObservaciones(txtObservaciones.getText());
+
+    orden.setIdCliente(cliente.getIdCliente());
+
+    orden.setIdVehiculo(vehiculo.getIdVehiculo());
+
+    int idOrden = ordenController.guardarOrden(orden);
+
+    if (idOrden == -1) {
+
+        JOptionPane.showMessageDialog(this,
+                "No fue posible guardar la orden.");
+
+        return;
+
+    }
+
+    boolean ok = ordenController.guardarOrdenServicio(
+            idOrden,
+            servicio.getIdServicio(),
+            servicio.getPrecio());
+
+    if (ok) {
+
+        JOptionPane.showMessageDialog(this,
+                "Orden registrada correctamente.");
+
+        cargarTabla();
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "La orden se guardó, pero ocurrió un problema al asociar el servicio.");
+
+    }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Cliente cliente =
+            (Cliente) cmbCliente.getSelectedItem();
+
+    Vehiculo vehiculo =
+            (Vehiculo) cmbVehiculo.getSelectedItem();
+
+    Servicio servicio =
+            (Servicio) cmbServicio.getSelectedItem();
+
+    if (cliente == null || vehiculo == null || servicio == null) {
+
+        JOptionPane.showMessageDialog(this,
+                "Debe seleccionar cliente, vehículo y servicio.");
+
+        return;
+
+    }
+
+    Orden orden = new Orden();
+
+    orden.setIdOrden(
+            listaOrdenes.get(
+                    tblServicios.getSelectedRow())
+                    .getIdOrden());
+
+    orden.setIdCliente(cliente.getIdCliente());
+
+    orden.setIdVehiculo(vehiculo.getIdVehiculo());
+
+    orden.setObservaciones(
+            txtObservaciones.getText());
+
+    orden.setCostoFinal(
+            servicio.getPrecio());
+
+    boolean ok1 =
+            ordenController.actualizarOrden(orden);
+
+    boolean ok2 =
+            ordenController.actualizarOrdenServicio(
+                    orden.getIdOrden(),
+                    servicio.getIdServicio(),
+                    servicio.getPrecio());
+
+    if (ok1 && ok2) {
+
+        JOptionPane.showMessageDialog(this,
+                "Orden actualizada correctamente.");
+
+        cargarTabla();
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "No fue posible actualizar la orden.");
+
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void tblServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiciosMouseClicked
+        int fila = tblServicios.getSelectedRow();
+
+    if (fila == -1) {
+        return;
+    }
+
+    Orden orden = listaOrdenes.get(fila);
+
+    seleccionarCliente(orden.getIdCliente());
+
+    cargarVehiculos();
+
+    seleccionarVehiculo(orden.getIdVehiculo());
+
+    seleccionarServicio(orden.getIdServicio());
+
+    txtObservaciones.setText(orden.getObservaciones());
+    }//GEN-LAST:event_tblServiciosMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new FrmServicios().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private componentes.BotonPersonalizado btnGuardar;
+    private componentes.BotonPersonalizado btnModificar;
+    private componentes.BotonPersonalizado btnNuevo;
+    private componentes.BotonPersonalizado btnRegresar;
+    private javax.swing.JComboBox<Cliente> cmbCliente;
+    private javax.swing.JComboBox<Servicio> cmbServicio;
+    private javax.swing.JComboBox<Vehiculo> cmbVehiculo;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblDuracion;
+    private javax.swing.JLabel lblObservaciones;
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblTipoServicio;
+    private javax.swing.JLabel lblVehiculo;
+    private componentes.PanelTitulo panelTituloServicios;
+    private componentes.TablaPersonalizada tblServicios;
+    private componentes.CampoTextoPersonalizado txtDescripcion;
+    private componentes.CampoTextoPersonalizado txtDuracion;
+    private componentes.CampoTextoPersonalizado txtObservaciones;
+    private componentes.CampoTextoPersonalizado txtPrecio;
+    // End of variables declaration//GEN-END:variables
+}
