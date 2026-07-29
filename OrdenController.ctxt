@@ -1,0 +1,21 @@
+#BlueJ class context
+#Fri Jul 03 21:43:19 CST 2026
+comment0.target=OrdenController
+comment1.target=OrdenController()
+comment10.params=idOrden
+comment10.target=modelo.Orden obtenerOrdenPorId(int)
+comment2.target=java.util.ArrayList listarOrdenes()
+comment3.target=java.util.ArrayList listarOrdenesPendientes()
+comment4.params=orden
+comment4.target=int guardarOrden(modelo.Orden)
+comment5.params=idOrden idServicio costoFinal
+comment5.target=boolean guardarOrdenServicio(int, int, double)
+comment6.params=orden
+comment6.target=boolean actualizarOrden(modelo.Orden)
+comment7.params=idOrden idServicio costo
+comment7.target=boolean actualizarOrdenServicio(int, int, double)
+comment8.params=idOrden
+comment8.target=boolean registrarSalida(int)
+comment9.params=idOrden
+comment9.target=modelo.Orden obtenerOrdenTicket(int)
+numComments=11

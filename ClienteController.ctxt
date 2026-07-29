@@ -1,0 +1,10 @@
+#BlueJ class context
+#Fri Jul 03 21:43:19 CST 2026
+comment0.target=ClienteController
+comment1.target=ClienteController()
+comment2.params=cliente
+comment2.target=boolean guardarCliente(modelo.Cliente)
+comment3.target=java.util.ArrayList listarClientes()
+comment4.params=cliente
+comment4.target=boolean actualizarCliente(modelo.Cliente)
+numComments=5

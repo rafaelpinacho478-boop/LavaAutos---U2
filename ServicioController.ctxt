@@ -1,0 +1,12 @@
+#BlueJ class context
+#Fri Jul 03 21:43:19 CST 2026
+comment0.target=ServicioController
+comment1.target=ServicioController()
+comment2.params=servicio
+comment2.target=boolean guardarServicio(modelo.Servicio)
+comment3.target=java.util.ArrayList listarServicios()
+comment4.params=servicio
+comment4.target=boolean actualizarServicio(modelo.Servicio)
+comment5.params=nombre
+comment5.target=modelo.Servicio buscarServicioPorNombre(java.lang.String)
+numComments=6

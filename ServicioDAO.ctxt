@@ -1,0 +1,9 @@
+#BlueJ class context
+#Fri Jul 03 22:35:57 CST 2026
+comment0.target=ServicioDAO
+comment1.target=java.util.ArrayList listarServicios()
+comment2.params=servicio
+comment2.target=boolean guardarService(modelo.Servicio)
+comment3.params=servicio
+comment3.target=boolean actualizarServicio(modelo.Servicio)
+numComments=4

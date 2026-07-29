@@ -1,0 +1,11 @@
+#BlueJ class context
+#Fri Jul 03 22:36:05 CST 2026
+comment0.target=OrdenDAO
+comment1.target=java.util.ArrayList listarOrdenesPendientes()
+comment2.params=orden
+comment2.target=boolean guardarOrden(modelo.Orden)
+comment3.params=idOrden idServicio
+comment3.target=boolean guardarOrdenServicio(int, int)
+comment4.params=orden
+comment4.target=boolean actualizarSalida(modelo.Orden)
+numComments=5

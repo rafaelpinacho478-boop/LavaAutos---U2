@@ -1,0 +1,9 @@
+#BlueJ class context
+#Fri Jul 03 22:36:02 CST 2026
+comment0.target=VehiculoDAO
+comment1.target=java.util.ArrayList listarVehiculos()
+comment2.params=vehiculo
+comment2.target=boolean guardarVehiculo(modelo.Vehiculo)
+comment3.params=vehiculo
+comment3.target=boolean actualizarVehiculo(modelo.Vehiculo)
+numComments=4

@@ -1,0 +1,9 @@
+#BlueJ class context
+#Fri Jul 03 22:31:46 CST 2026
+comment0.target=ClienteDAO
+comment1.target=java.util.ArrayList listarClientes()
+comment2.params=cliente
+comment2.target=boolean guardarCliente(modelo.Cliente)
+comment3.params=cliente
+comment3.target=boolean actualizarCliente(modelo.Cliente)
+numComments=4

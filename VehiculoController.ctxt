@@ -1,0 +1,13 @@
+#BlueJ class context
+#Fri Jul 03 21:43:19 CST 2026
+comment0.target=VehiculoController
+comment1.target=VehiculoController()
+comment2.params=vehiculo
+comment2.target=boolean guardarVehiculo(modelo.Vehiculo)
+comment3.target=java.util.ArrayList listarVehiculos()
+comment4.params=vehiculo
+comment4.target=boolean actualizarVehiculo(modelo.Vehiculo)
+comment5.target=java.util.ArrayList listarClientes()
+comment6.params=idCliente
+comment6.target=java.util.ArrayList listarVehiculosPorCliente(int)
+numComments=7

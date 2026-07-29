@@ -1,0 +1,9 @@
+#BlueJ class context
+#Fri Jul 03 21:50:20 CST 2026
+comment0.target=PanelTitulo
+comment1.target=PanelTitulo()
+comment2.target=void configurar()
+comment3.params=titulo
+comment3.target=void setTitulo(java.lang.String)
+comment4.target=java.lang.String getTitulo()
+numComments=5
